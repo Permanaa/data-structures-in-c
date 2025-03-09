@@ -44,18 +44,22 @@ void addStock(StockList *list, char *code, char *name, int amount)
         temp->next = new_stock;
         new_stock->prev = temp;
     }
-    printf("Barang %s telah ditambahkan.\n", name);
+    printf("----- Barang %s telah ditambahkan. -----\n", name);
 }
 
 void showStock(StockList *list)
 {
     Stock *temp = list->head;
     printf("Daftar Barang:\n");
+    printf("+------------+----------------------+---------+\n");
+    printf("| Kode       | Nama                 | Stock   |\n");
+    printf("+------------+----------------------+---------+\n");
     while (temp)
     {
-        printf("Kode: %s, Nama: %s, Stok: %d\n", temp->code, temp->name, temp->amount);
+        printf("| %-10.10s | %-20.20s | %7d |\n", temp->code, temp->name, temp->amount);
         temp = temp->next;
     }
+    printf("+------------+----------------------+---------+\n");
 }
 
 void deleteStock(StockList *list, char *code)
@@ -72,12 +76,13 @@ void deleteStock(StockList *list, char *code)
             if (temp == list->head)
                 list->head = temp->next;
             free(temp);
-            printf("Barang telah dihapus.\n");
+            printf("--- Barang telah dihapus. ---\n");
             return;
         }
         temp = temp->next;
     }
-    printf("Barang tidak ditemukan.\n");
+    printf("\n");
+    printf("--- Barang tidak ditemukan. ---\n");
 }
 
 int main()
@@ -100,6 +105,7 @@ int main()
         printf("Pilihan: ");
         scanf("%d", &selected);
         getchar();
+        printf("\n");
 
         switch (selected)
         {
@@ -112,15 +118,20 @@ int main()
             stockNameInput[strcspn(stockNameInput, "\n")] = 0;
             printf("Masukkan stok barang: ");
             scanf("%d", &stockAmountInput);
+            printf("\n");
             addStock(&stockList, stockCodeInput, stockNameInput, stockAmountInput);
             break;
         case 2:
             printf("Masukkan kode barang yang akan dihapus: ");
             scanf("%s", stockCodeInput);
+            printf("\n");
             deleteStock(&stockList, stockCodeInput);
             break;
         case 4:
             showStock(&stockList);
+            break;
+        case 6:
+            printf("----- Keluar -----\n");
             break;
         default:
             printf("Pilihan tidak valid.\n");
