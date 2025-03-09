@@ -85,6 +85,22 @@ void deleteStock(StockList *list, char *code)
     printf("--- Barang tidak ditemukan. ---\n");
 }
 
+void updateStock(StockList *list, char *code, int amount)
+{
+    Stock *temp = list->head;
+    while (temp)
+    {
+        if (strcmp(temp->code, code) == 0)
+        {
+            temp->amount += amount;
+            printf("----- Stok barang %s diperbarui menjadi %d. -----\n", temp->name, temp->amount);
+            return;
+        }
+        temp = temp->next;
+    }
+    printf("----- Barang tidak ditemukan. -----\n");
+}
+
 int main()
 {
     StockList stockList;
@@ -126,6 +142,14 @@ int main()
             scanf("%s", stockCodeInput);
             printf("\n");
             deleteStock(&stockList, stockCodeInput);
+            break;
+        case 3:
+            printf("Masukkan kode barang: ");
+            scanf("%s", stockCodeInput);
+            printf("Masukkan jumlah stok tambahan: ");
+            scanf("%d", &stockAmountInput);
+            printf("\n");
+            updateStock(&stockList, stockCodeInput, stockAmountInput);
             break;
         case 4:
             showStock(&stockList);
