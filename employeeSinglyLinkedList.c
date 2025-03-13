@@ -155,6 +155,20 @@ void deleteEmployee()
   printf("=== Data karyawan berhasil dihapus! ===\n");
 }
 
+void deleteAllEmployees()
+{
+  Employee *temp;
+  while (head)
+  {
+    temp = head;
+    head = head->next;
+    free(temp);
+  }
+  count = 0;
+  printf("\n");
+  printf("=== Semua data karyawan telah dihapus! ===\n");
+}
+
 int main()
 {
   int choice;
@@ -164,7 +178,8 @@ int main()
     printf("1. Tambah Karyawan\n");
     printf("2. Tampilkan Karyawan\n");
     printf("3. Hapus Karyawan\n");
-    printf("4. Keluar\n");
+    printf("4. Hapus Semua Data Karyawan\n");
+    printf("5. Keluar\n");
     printf("Pilihan Anda: ");
     scanf("%d", &choice);
     getchar();
@@ -181,6 +196,9 @@ int main()
       deleteEmployee();
       break;
     case 4:
+      deleteAllEmployees();
+      break;
+    case 5:
       printf("\n");
       printf("=== Keluar dari program... ===\n");
       break;
@@ -188,7 +206,7 @@ int main()
       printf("\n");
       printf("!!! Pilihan tidak valid! !!!\n");
     }
-  } while (choice != 4);
+  } while (choice != 5);
 
   return 0;
 }
