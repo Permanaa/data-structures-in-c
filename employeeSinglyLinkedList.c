@@ -45,6 +45,7 @@ void pushEmployee()
   scanf("%d", &id);
   if (id < 0 || id > 99999)
   {
+    printf("\n");
     printf("!!! Employee ID tidak valid! !!!\n");
     return;
   }
