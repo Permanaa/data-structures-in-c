@@ -85,7 +85,7 @@ void pushEmployee()
   }
   count++;
   printf("\n");
-  printf("Data karyawan berhasil ditambahkan!\n");
+  printf("=== Data karyawan berhasil ditambahkan! ===\n");
 }
 
 void displayEmployees()
@@ -108,6 +108,53 @@ void displayEmployees()
   printf("+-------+------------------------------+------------------------------+------------+----------------------------------------------------+\n");
 }
 
+void deleteEmployee()
+{
+  printf("\n");
+  if (!head)
+  {
+    printf("!!! Database kosong! !!!\n");
+    return;
+  }
+
+  int id;
+  printf("Masukkan Employee ID yang akan dihapus: ");
+  scanf("%d", &id);
+
+  if (!head)
+    return;
+  if (head->id == id)
+  {
+    Employee *temp = head;
+    head = head->next;
+    free(temp);
+    count--;
+    printf("\n");
+    printf("=== Data karyawan berhasil dihapus! ===\n");
+    return;
+  }
+
+  Employee *curr = head;
+  while (curr->next && curr->next->id != id)
+  {
+    curr = curr->next;
+  }
+
+  if (!curr->next)
+  {
+    printf("\n");
+    printf("!!! Karyawan dengan ID %d tidak ditemukan! !!!\n", id);
+    return;
+  }
+
+  Employee *temp = curr->next;
+  curr->next = temp->next;
+  free(temp);
+  count--;
+  printf("\n");
+  printf("=== Data karyawan berhasil dihapus! ===\n");
+}
+
 int main()
 {
   int choice;
@@ -116,7 +163,8 @@ int main()
     printf("\nMenu:\n");
     printf("1. Tambah Karyawan\n");
     printf("2. Tampilkan Karyawan\n");
-    printf("3. Keluar\n");
+    printf("3. Hapus Karyawan\n");
+    printf("4. Keluar\n");
     printf("Pilihan Anda: ");
     scanf("%d", &choice);
     getchar();
@@ -130,12 +178,17 @@ int main()
       displayEmployees();
       break;
     case 3:
-      printf("Keluar dari program...\n");
+      deleteEmployee();
+      break;
+    case 4:
+      printf("\n");
+      printf("=== Keluar dari program... ===\n");
       break;
     default:
-      printf("Pilihan tidak valid!\n");
+      printf("\n");
+      printf("!!! Pilihan tidak valid! !!!\n");
     }
-  } while (choice != 3);
+  } while (choice != 4);
 
   return 0;
 }
